@@ -16,6 +16,8 @@ HEIGHT = 800
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Professors Invasion!!')
 
+background = pygame.image.load('imagens/back.png').convert()
+background = pygame.transform.scale(background, (WIDTH, HEIGHT))
 game = True
 
 while game:
@@ -24,6 +26,7 @@ while game:
             game = False
 
     window.fill((0, 0, 0))
+    window.blit(background, (10, 10))
 
     pygame.display.update()
 
