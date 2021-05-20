@@ -10,7 +10,10 @@ Blue = (0, 0, 250)
 
 pygame.init()
 
-window = pygame.display.set_mode((800, 800))
+WIDTH = 800
+HEIGHT = 800
+
+window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Professors Invasion!!')
 
 game = True
