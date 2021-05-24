@@ -48,17 +48,11 @@ game = True
 clock = pygame.time.Clock()
 FPS = 30
 
-humberto1 = Enemy(humberto_img)
-humberto2 = Enemy(humberto_img)
-humberto3 = Enemy(humberto_img)
-humberto4 = Enemy(humberto_img)
-humberto5 = Enemy(humberto_img)
-humberto6 = Enemy(humberto_img)
-humberto7 = Enemy(humberto_img)
-humberto8 = Enemy(humberto_img)
-humberto9 = Enemy(humberto_img)
-humberto10 = Enemy(humberto_img)
-humberto11 = Enemy(humberto_img)
+
+all_enemies = pygame.sprite.Group()
+for i in range(11):
+    humberto = Enemy(humberto_img)
+    all_enemies.add(humberto)
 
 while game:
     clock.tick (FPS)
@@ -67,31 +61,12 @@ while game:
         if event.type == pygame.QUIT:
             game = False
 
-    humberto1.update()
-    humberto2.update()
-    humberto3.update()
-    humberto4.update()
-    humberto5.update()
-    humberto6.update()
-    humberto7.update()
-    humberto8.update()
-    humberto9.update()
-    humberto10.update()
-    humberto11.update()
+    all_enemies.update()
     
     window.fill((0, 0, 0))
     window.blit(background, (10, 10))
-    window.blit(humberto1.image, humberto1.rect)
-    window.blit(humberto2.image, humberto2.rect)
-    window.blit(humberto3.image, humberto3.rect)
-    window.blit(humberto4.image, humberto4.rect)
-    window.blit(humberto5.image, humberto5.rect)
-    window.blit(humberto6.image, humberto6.rect)
-    window.blit(humberto7.image, humberto7.rect)
-    window.blit(humberto8.image, humberto8.rect)
-    window.blit(humberto9.image, humberto9.rect)
-    window.blit(humberto10.image, humberto10.rect)
-    window.blit(humberto11.image, humberto11.rect)
+    all_enemies.draw(window)
+    
     pygame.display.update()
 
 
