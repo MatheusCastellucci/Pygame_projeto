@@ -23,12 +23,12 @@ humberto_img = pygame.image.load('imagens/Ft_Humberto.png').convert_alpha()
 humberto_img = pygame.transform.scale(humberto_img, (HUMBERTO_WIDTH, HUMBERTO_HEIGHT))
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, img):
+    def __init__(self, img, pos_x, pos_y):
         pygame.sprite.Sprite.__init__(self)
         self.image = img
         self.rect = self.image.get_rect()
-        self.rect.x = random.randint(0, WIDTH-HUMBERTO_HEIGHT)
-        self.rect.y = 100
+        self.rect.x = pos_x
+        self.rect.y = pos_y
         self.speedx = 0
         self.speedy = 0
 
@@ -50,9 +50,14 @@ FPS = 30
 
 
 all_enemies = pygame.sprite.Group()
+pos_x = 25
+pos_y = 100
+
 for i in range(11):
-    humberto = Enemy(humberto_img)
+    
+    humberto = Enemy(humberto_img, pos_x, pos_y)
     all_enemies.add(humberto)
+    pos_x += 70
 
 while game:
     clock.tick (FPS)
