@@ -22,7 +22,7 @@ game = True
 
 while game:
     for event in pygame.event.get():
-        if event.type == pygame.QUIT or event.type == pygame.KEYUP:
+        if event.type == pygame.QUIT:
             game = False
 
     window.fill((0, 0, 0))
