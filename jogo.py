@@ -37,11 +37,13 @@ class Ship(pygame.sprite.Sprite):
 
     def upadate(self):
         self.rect.x += self.speedx
+        self.rect.y += self.speedy
 
         if self.rect.right > WIDTH:
             self.rect.right = WIDTH
         if self.rect.left < 0:
             self.rect.left = 0
+
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, img, pos_x, pos_y):
@@ -82,7 +84,7 @@ for i in range(11):
 
 while game:
     clock.tick (FPS)
-
+    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game = False
@@ -98,7 +100,7 @@ while game:
                 player.speedx += 8
             if event.key == pygame.K_RIGHT:
                 player.speedx -= 8
-
+                
     all_sprites.update()
     
     window.fill((0, 0, 0))
