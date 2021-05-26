@@ -43,9 +43,9 @@ class Enemy:
     def detectCollision(self):
         for laser in lasers:
             if (laser.x > self.x and
-                    laser.x < self.x + 64 and
+                    laser.x < self.x + 50 and
                     laser.y > self.y and
-                    laser.y < self.y + 64):
+                    laser.y < self.y + 50):
                 lasers.remove(laser)
                 enemies.remove(self)
 
@@ -70,9 +70,9 @@ enemies = []
 lasers = []
 
 # Spawn enemies
-for x in range(1, 11):
+for x in range(1, 10):
     for y in range(1, 4):
-        enemies.append(Enemy(x * 50, y * 50))
+        enemies.append(Enemy(x * 55, y * 50))
 
 def displayText(text):
     font = pygame.font.SysFont('', 50)
@@ -96,6 +96,8 @@ while isPlaying:
         if event.type == pygame.QUIT:
             isPlaying = False
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            lasers.append(Laser(player.x, player.y))
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
             lasers.append(Laser(player.x, player.y))
 
     for enemy in enemies:
