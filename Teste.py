@@ -33,7 +33,7 @@ class Player:
 class Enemy:
     def __init__(self, x, y):
         self.x = x
-        self.y = y -200
+        self.y = y - 200
 
     def draw(self):
         enemyImg = humberto_img 
@@ -109,7 +109,9 @@ while isPlaying:
     for laser in lasers:
         laser.draw()
 
+    i = 0
     if len(enemies) <= 0:
+        lasers = []
         for x in range(1, 10):
             for y in range(1, 4):
                 enemies.append(Enemy(x * 55, y * 50))
