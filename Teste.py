@@ -52,8 +52,8 @@ class Enemy:
 
 class Laser:
     def __init__(self, x, y):
-        self.x = x
-        self.y = y
+        self.x = x + 25
+        self.y = y - 10  
 
     def draw(self):
         pygame.draw.rect(screen, (255, 0, 255), pygame.Rect(self.x, self.y, 2, 5))
@@ -61,7 +61,7 @@ class Laser:
 
 
 # Create Player object
-player = Player(width/2, height - 50)
+player = Player((width/2)-25, height - 50)
 
 # Enemies list
 enemies = []
