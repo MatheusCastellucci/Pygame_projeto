@@ -5,7 +5,7 @@ import pygame
 pygame.init()
 
 width = 600
-height = 800
+height = 600
 HUMBERTO_WIDTH = 50
 HUMBERTO_HEIGHT = 38
 NAVE_WIDTH = 50
@@ -33,7 +33,7 @@ class Player:
 class Enemy:
     def __init__(self, x, y):
         self.x = x
-        self.y = y
+        self.y = y -200
 
     def draw(self):
         enemyImg = humberto_img 
@@ -110,6 +110,12 @@ while isPlaying:
         laser.draw()
 
     if len(enemies) <= 0:
-        displayText("GANHASTE")
+        for x in range(1, 10):
+            for y in range(1, 4):
+                enemies.append(Enemy(x * 55, y * 50))
+        enemy.draw()
+        enemy.detectCollision()
+        if enemy.y > height-20:
+            displayText("PERDESTE")
 
     pygame.display.update()
