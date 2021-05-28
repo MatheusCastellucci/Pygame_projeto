@@ -154,8 +154,9 @@ while isPlaying:
     if len(enemies) <= 0:
         lasers = []
         for x in range(1, 10):
-            for y in range(1, 4):
-                enemies.append(EnemyHUM(x * 55, y * 50))
+            enemies.append(EnemyHUM(x * 55, 50))
+            enemies.append(EnemyHAGE(x * 55, 100))
+            enemies.append(EnemyGUZZO(x * 55, 150))
         enemy.draw()
         enemy.detectCollision()
         if enemy.y > height-20:
