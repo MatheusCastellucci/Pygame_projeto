@@ -38,6 +38,13 @@ assets ['nave_img'] = pygame.transform.scale(nave_img, (NAVE_WIDTH, NAVE_HEIGHT)
 tiro_img = pygame.image.load('imagens/tiro.png')
 assets ['tiro_img'] = pygame.transform.scale(tiro_img, (TIRO_WIDTH, TIRO_HEIGHT))
 
+
+pygame.mixer.music.load('sons/musiquinea.ogg')
+pygame.mixer.music.set_volume(0.4)
+assets['som_dano'] = pygame.mixer.Sound('sons/expl3.wav')
+assets['mata_prof'] = pygame.mixer.Sound('sons/expl6.wav')
+assets['som_tirinho'] = pygame.mixer.Sound('sons/pew.wav')
+
 class Ship(pygame.sprite.Sprite):
     def __init__(self, groups, img):
         pygame.sprite.Sprite.__init__(self)
