@@ -9,8 +9,8 @@ pygame.display.set_caption('Professors Invasion!!')
 
 PROFESSOR_WIDTH = 60
 PROFESSOR_HEIGHT = 48
-NAVE_WIDTH = 1
-NAVE_HEIGHT = 1
+NAVE_WIDTH = 60
+NAVE_HEIGHT = 48
 TIRO_WIDTH = 1
 TIRO_HEIGHT = 2
 
@@ -18,7 +18,7 @@ assets = {}
 background = pygame.image.load('imagens/back.png').convert()
 assets['background'] = pygame.transform.scale(background, (WIDTH, HEIGHT))
 
-humberto_img = pygame.image.load('imagens/Ft_Humberto.png').convert()
+humberto_img = pygame.image.load('imagens/Ft_Humberto.png').convert_alpha()
 assets['humberto_img'] = pygame.transform.scale(humberto_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
 
 hage_img = pygame.image.load('imagens/Hage.jpg').convert()
@@ -45,12 +45,13 @@ assets['som_tirinho'] = pygame.mixer.Sound('sons/tirinho.wav')
 class Ship(pygame.sprite.Sprite):
     def __init__(self, groups, assets):
         pygame.sprite.Sprite.__init__(self)
-        self.image = nave_img
+        self.image = assets['nave_img']
         self.rect = self.image.get_rect()
         self.rect.centerx = WIDTH / 2
         self.rect.bottom = HEIGHT - 30
         self.speedx = 0
         self.groups = groups
+        self.assets = assets
         self.last_shot = pygame.time.get_ticks()
         self.shoot_ticks = 200
 
@@ -67,10 +68,10 @@ class Ship(pygame.sprite.Sprite):
         elapsed_ticks = momento - self.last_shot
 
         if elapsed_ticks < self.shoot_ticks:
-            self.shoot_ticks = momento
+            self.last_shot = momento
             novo_tiro = Tirinho(self.assets, self.rect.top, self.rect.centerx)
-            self.groups['all_sprites'].add(novo_tiro )
-            self.groups['all_tirinhos'].add(novo_tiro )
+            self.groups['all_sprites'].add(novo_tiro)
+            self.groups['all_tirinhos'].add(novo_tiro)
             self.assets['pew_sound'].play()
 
 class EnemyGUZZO(pygame.sprite.Sprite):
@@ -81,7 +82,7 @@ class EnemyGUZZO(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = assets['pos_x']
         self.rect.y = assets['pos_y']
-        self.speedx = 3
+        self.speedx = 2.75
         self.speedy = 0
 
     def update(self):
@@ -119,7 +120,7 @@ class EnemyHAGE(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = assets['pos_x']
         self.rect.y = assets['pos_y'] + 110
-        self.speedx = 3
+        self.speedx = 3.3
         self.speedy = 0
 
     def update(self):
@@ -244,9 +245,19 @@ while state != DONE:
         
         if humberto.rect.y > HEIGHT-20:
             vidas -= 1
+            humberto.kill()
             if vidas == 0:
                 state = DONE
-
+        if hage.rect.y > HEIGHT-20:
+            vidas -= 1
+            hage.kill()
+            if vidas == 0:
+                state = DONE
+        if guzzo.rect.y > HEIGHT-20:
+            vidas -= 1
+            guzzo.kill()
+            if vidas == 0:
+                state = DONE
 
     window.fill((0, 0, 0))
     window.blit(assets['background'], (0, 0))
