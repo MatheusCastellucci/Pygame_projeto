@@ -42,11 +42,11 @@ assets ['tiro_img'] = pygame.transform.scale(tiro_img, (TIRO_WIDTH, TIRO_HEIGHT)
 pygame.mixer.music.load('sons/musiquinea.ogg')
 pygame.mixer.music.set_volume(0.4)
 assets['som_dano'] = pygame.mixer.Sound('sons/expl3.wav')
-assets['mata_prof'] = pygame.mixer.Sound('sons/expl6.wav')
+assets['mata_alien_prof'] = pygame.mixer.Sound('sons/expl6.wav')
 assets['som_tirinho'] = pygame.mixer.Sound('sons/tirinho.wav')
 
 class Ship(pygame.sprite.Sprite):
-    def __init__(self, groups, img):
+    def __init__(self, groups, assets):
         pygame.sprite.Sprite.__init__(self)
         self.image = nave_img
         self.rect = self.image.get_rect()
@@ -71,8 +71,10 @@ class Ship(pygame.sprite.Sprite):
 
         if elapsed_ticks < self.shoot_ticks:
             self.shoot_ticks = momento
-
-
+            novo_tiro = Bullet(self.assets, self.rect.top, self.rect.centerx)
+            self.groups['all_sprites'].add(novo_tiro )
+            self.groups['all_bullets'].add(novo_tiro )
+            self.assets['pew_sound'].play()
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, img, pos_x, pos_y):
