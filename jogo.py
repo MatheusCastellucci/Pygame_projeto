@@ -37,6 +37,8 @@ nave_img = pygame.image.load('imagens/nave.png')
 assets ['nave_img'] = pygame.transform.scale(nave_img, (NAVE_WIDTH, NAVE_HEIGHT))
 tiro_img = pygame.image.load('imagens/tiro.png')
 assets ['tiro_img'] = pygame.transform.scale(tiro_img, (TIRO_WIDTH, TIRO_HEIGHT))
+assets ['pos_x'] = 55
+assets ['pos_y'] = 50
 
 
 pygame.mixer.music.load('sons/musiquinea.ogg')
@@ -71,39 +73,19 @@ class Ship(pygame.sprite.Sprite):
 
         if elapsed_ticks < self.shoot_ticks:
             self.shoot_ticks = momento
-            novo_tiro = Bullet(self.assets, self.rect.top, self.rect.centerx)
+            novo_tiro = TIRINHO(self.assets, self.rect.top, self.rect.centerx)
             self.groups['all_sprites'].add(novo_tiro )
             self.groups['all_bullets'].add(novo_tiro )
             self.assets['pew_sound'].play()
 
-class Enemy(pygame.sprite.Sprite):
-    def __init__(self, img, pos_x, pos_y):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = assets['meteor_img']
-        self.mask = pygame.mask.from_surface(self.image)
-        self.rect = self.image.get_rect()
-        self.rect.x = pos_x
-        self.rect.y = pos_y
-        self.speedx = 0
-        self.speedy = 0
-
-    def upadate(self):
-        self.rect.x += self.speedx
-        self.rect.y += self.speedy
-        
-        if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
-            self.rect.y += 38
-            self.speedx *= -1
-            self.speedy = 0
-
-class EnemyGUZZO:
+class EnemyGUZZO(pygame.sprite.Sprite):
     def __init__(self, assets):
         pygame.sprite.Sprite.__init__(self)
         self.image = assets['guzzo_img']
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
-        self.rect.x = pos_x
-        self.rect.y = pos_y
+        self.rect.x = assets['pos_x']
+        self.rect.y = assets['pos_y']
         self.speedx = 10
         self.speedy = 0
 
@@ -115,14 +97,14 @@ class EnemyGUZZO:
             self.rect.y += 38
             self.speedx *= -1
 
-class EnemyHUM:
+class EnemyHUM(pygame.sprite.Sprite):
     def __init__(self, assets):
         pygame.sprite.Sprite.__init__(self)
         self.image = assets['humberto_img']
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
-        self.rect.x = pos_x
-        self.rect.y = pos_y+50
+        self.rect.x = assets['pos_x']
+        self.rect.y = assets['pos_y'] + 50
         self.speedx = 10
         self.speedy = 0
 
@@ -134,14 +116,14 @@ class EnemyHUM:
             self.rect.y += 38
             self.speedx *= -1
 
-class EnemyHAGE:
+class EnemyHAGE(pygame.sprite.Sprite):
     def __init__(self, assets):
         pygame.sprite.Sprite.__init__(self)
         self.image = assets['hage_img']
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
-        self.rect.x = pos_x
-        self.rect.y = pos_y+100
+        self.rect.x = assets['pos_x']
+        self.rect.y = assets['pos_y'] + 100
         self.speedx = 10
         self.speedy = 0
 
@@ -152,22 +134,58 @@ class EnemyHAGE:
         if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
             self.rect.y += 38
             self.speedx *= -1
+
+class TIRINHO(pygame.sprite.Sprite):
+    def __init__(self, assets, bottom, centerx):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = assets['tiro_img']
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
+        self.rect.centerx = centerx
+        self.rect.bottom = bottom
+        self.speedy = -8
+
+    def update(self):
+        self.rect.y += self.speedy
+        if self.rect.bottom < 0:
+            self.kill()
+
 game = True
 
 clock = pygame.time.Clock()
-FPS = 30
+FPS = 60
 
 all_sprites = pygame.sprite.Group()
-pos_x = 55
-pos_y = 50
-player = Ship(nave_img)
+all_guzzos = pygame.sprite.Group()
+all_humbertos = pygame.sprite.Group()
+all_hages = pygame.sprite.Group()
+all_tirinhos = pygame.sprite.Group()
+groups = {}
+groups['all_guzzos'] = all_guzzos
+groups['all_humberto'] = all_humbertos
+groups['all_hages'] = all_hages
+groups['all_tirinhos'] = all_tirinhos 
+
+player = Ship(groups, assets)
 all_sprites.add(player)
 
-for i in range(11):
-    
-    humberto = Enemy(humberto_img, pos_x, pos_y)
+enemies = []
+
+for x in range(1, 10):
+    humberto = EnemyHUM(assets)
     all_sprites.add(humberto)
-    pos_x += 70
+    all_humbertos.add(humberto)
+    hage = EnemyHAGE(assets)
+    all_sprites.add(hage)
+    all_hages.add(hage)
+    guzzo = EnemyGUZZO(assets)
+    all_sprites.add(guzzo)
+    all_guzzos.add(guzzo)
+
+def displayText(text):
+    font = pygame.font.SysFont('', 50)
+    message = font.render(text, False, (255, 255, 255))
+    window.blit(message, (200, 160))
 
 while game:
     clock.tick (FPS)
