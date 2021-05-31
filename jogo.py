@@ -40,6 +40,7 @@ assets ['tiro_img'] = pygame.transform.scale(tiro_img, (TIRO_WIDTH, TIRO_HEIGHT)
 assets ['pos_x'] = 55
 assets ['pos_y'] = 50
 
+assets["fonte_score"] = pygame.font.Font('fontes/PressStart2P.ttf', 28)
 
 pygame.mixer.music.load('sons/musiquinea.ogg')
 pygame.mixer.music.set_volume(0.4)
@@ -259,7 +260,7 @@ while state != DONE:
     text_rect.midtop = (WIDTH / 2,  10)
     window.blit(text_surface, text_rect)
 
-    text_surface = assets['score_font'].render(chr(9829) * vidas, True, (255, 0, 0))
+    text_surface = assets['fonte_score'].render(chr(9829) * vidas, True, (255, 0, 0))
     text_rect = text_surface.get_rect()
     text_rect.bottomleft = (10, HEIGHT - 10)
     window.blit(text_surface, text_rect)
