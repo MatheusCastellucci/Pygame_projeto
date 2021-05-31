@@ -134,7 +134,7 @@ class EnemyHUM:
             self.rect.y += 38
             self.speedx *= -1
 
-class EnemyHUM:
+class EnemyHAGE:
     def __init__(self, img, pos_x, pos_y):
         pygame.sprite.Sprite.__init__(self)
         self.image = assets['hage_img']
