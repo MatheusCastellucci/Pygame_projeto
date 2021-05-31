@@ -97,7 +97,7 @@ class Enemy(pygame.sprite.Sprite):
             self.speedy = 0
 
 class EnemyGUZZO:
-    def __init__(self, img, pos_x, pos_y):
+    def __init__(self, assets):
         pygame.sprite.Sprite.__init__(self)
         self.image = assets['guzzo_img']
         self.mask = pygame.mask.from_surface(self.image)
@@ -116,7 +116,7 @@ class EnemyGUZZO:
             self.speedx *= -1
 
 class EnemyHUM:
-    def __init__(self, img, pos_x, pos_y):
+    def __init__(self, assets):
         pygame.sprite.Sprite.__init__(self)
         self.image = assets['humberto_img']
         self.mask = pygame.mask.from_surface(self.image)
@@ -135,7 +135,7 @@ class EnemyHUM:
             self.speedx *= -1
 
 class EnemyHAGE:
-    def __init__(self, img, pos_x, pos_y):
+    def __init__(self, assets):
         pygame.sprite.Sprite.__init__(self)
         self.image = assets['hage_img']
         self.mask = pygame.mask.from_surface(self.image)
