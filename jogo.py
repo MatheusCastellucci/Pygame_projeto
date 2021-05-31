@@ -15,8 +15,7 @@ HEIGHT = 800
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Professors Invasion!!')
 
-width = 600
-height = 600
+
 PROFESSOR_WIDTH = 50
 PROFESSOR_HEIGHT = 38
 NAVE_WIDTH = 50
@@ -25,8 +24,8 @@ TIRO_WIDTH = 1
 TIRO_HEIGHT = 2
 
 assets = {}
-background = pygame.image.load('imagens/back.png')
-assets ['background'] = pygame.transform.scale(background, (width, height))
+background = pygame.image.load('imagens/back.png').convert()
+assets ['background'] = pygame.transform.scale(background, (WIDTH, HEIGHT))
 humberto_img = pygame.image.load('imagens/Ft_Humberto.png')
 assets ['humberto_img'] = pygame.transform.scale(humberto_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
 hage_img = pygame.image.load('imagens/Hage.jpg')
@@ -244,14 +243,14 @@ while state != DONE:
             if score % 1000 == 0 and vidas <= 3:
                 vidas += 1
         
-        if humberto.rect.y > height-20:
+        if humberto.rect.y > HEIGHT-20:
             vidas -= 1
             if vidas == 0:
                 state = DONE
 
 
     window.fill((0, 0, 0))
-    window.blit(background, (0, 0))
+    window.blit(assets['background'], (0, 0))
 
     all_sprites.draw(window)
 
