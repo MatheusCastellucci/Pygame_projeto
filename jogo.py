@@ -30,7 +30,7 @@ assets['guzzo_img'] = pygame.transform.scale(guzzo_img, (PROFESSOR_WIDTH, PROFES
 nave_img = pygame.image.load('imagens/nave.png').convert_alpha()
 assets['nave_img'] = pygame.transform.scale(nave_img, (NAVE_WIDTH, NAVE_HEIGHT))
 
-tiro_img = pygame.image.load('imagens/tiro.png').convert()
+tiro_img = pygame.image.load('imagens/tiro.png').convert_alpha()
 assets['tiro_img'] = pygame.transform.scale(tiro_img, (TIRO_WIDTH, TIRO_HEIGHT))
 assets['pos_y'] = 50
 
@@ -68,9 +68,9 @@ class Ship(pygame.sprite.Sprite):
 
         if elapsed_ticks < self.shoot_ticks:
             self.shoot_ticks = momento
-            novo_tiro = TIRINHO(self.assets, self.rect.top, self.rect.centerx)
+            novo_tiro = Tirinho(self.assets, self.rect.top, self.rect.centerx)
             self.groups['all_sprites'].add(novo_tiro )
-            self.groups['all_bullets'].add(novo_tiro )
+            self.groups['all_tirinhos'].add(novo_tiro )
             self.assets['pew_sound'].play()
 
 class EnemyGUZZO(pygame.sprite.Sprite):
@@ -130,7 +130,7 @@ class EnemyHAGE(pygame.sprite.Sprite):
             self.rect.y += 38
             self.speedx *= -1
 
-class TIRINHO(pygame.sprite.Sprite):
+class Tirinho(pygame.sprite.Sprite):
     def __init__(self, assets, bottom, centerx):
         pygame.sprite.Sprite.__init__(self)
         self.image = assets['tiro_img']
@@ -206,6 +206,8 @@ while state != DONE:
                     player.speedx -= 8
                 if event.key == pygame.K_RIGHT:
                     player.speedx += 8
+                if event.key == pygame.K_SPACE:
+                    player.shoot()
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
