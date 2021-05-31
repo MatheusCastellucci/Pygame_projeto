@@ -54,7 +54,7 @@ class Ship(pygame.sprite.Sprite):
         self.last_shot = pygame.time.get_ticks()
         self.shoot_ticks = 200
 
-    def upadate(self):
+    def update(self):
         self.rect.x += self.speedx
 
         if self.rect.right > WIDTH:
@@ -81,10 +81,10 @@ class EnemyGUZZO(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = assets['pos_x']
         self.rect.y = assets['pos_y']
-        self.speedx = 10
+        self.speedx = 3
         self.speedy = 0
 
-    def upadate(self):
+    def update(self):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
         
@@ -100,10 +100,10 @@ class EnemyHUM(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = assets['pos_x']
         self.rect.y = assets['pos_y'] + 55
-        self.speedx = 10
+        self.speedx = 3
         self.speedy = 0
 
-    def upadate(self):
+    def update(self):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
         
@@ -119,10 +119,10 @@ class EnemyHAGE(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = assets['pos_x']
         self.rect.y = assets['pos_y'] + 110
-        self.speedx = 10
+        self.speedx = 3
         self.speedy = 0
 
-    def upadate(self):
+    def update(self):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
         
