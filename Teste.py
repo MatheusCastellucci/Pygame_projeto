@@ -20,6 +20,8 @@ guzzo_img = pygame.image.load('imagens/Guzzo.jpg')
 guzzo_img = pygame.transform.scale(guzzo_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
 nave_img = pygame.image.load('imagens/nave.png')
 nave_img = pygame.transform.scale(nave_img, (NAVE_WIDTH, NAVE_HEIGHT))
+tiro_img = pygame.image.load('imagens/tiro.png')
+tiro_img = pygame.transform.scale(tiro_img, (NAVE_WIDTH, NAVE_HEIGHT))
 
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Professors Invasion!!")
