@@ -79,7 +79,8 @@ class Ship(pygame.sprite.Sprite):
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, img, pos_x, pos_y):
         pygame.sprite.Sprite.__init__(self)
-        self.image = img
+        self.image = assets['meteor_img']
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.x = pos_x
         self.rect.y = pos_y
@@ -91,19 +92,74 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.y += self.speedy
         
         if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
-            self.rect.x = random.randint(0, WIDTH-PROFESSOR_WIDTH)
-            self.rect.y = 100
-            self.speedx = 0
+            self.rect.y += 38
+            self.speedx *= -1
             self.speedy = 0
 
+class EnemyGUZZO:
+    def __init__(self, img, pos_x, pos_y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = assets['guzzo_img']
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
+        self.rect.x = pos_x
+        self.rect.y = pos_y
+        self.speedx = 10
+        self.speedy = 0
+
+    def upadate(self):
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+        
+        if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
+            self.rect.y += 38
+            self.speedx *= -1
+
+class EnemyHUM:
+    def __init__(self, img, pos_x, pos_y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = assets['humberto_img']
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
+        self.rect.x = pos_x
+        self.rect.y = pos_y+50
+        self.speedx = 10
+        self.speedy = 0
+
+    def upadate(self):
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+        
+        if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
+            self.rect.y += 38
+            self.speedx *= -1
+
+class EnemyHUM:
+    def __init__(self, img, pos_x, pos_y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = assets['hage_img']
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
+        self.rect.x = pos_x
+        self.rect.y = pos_y+100
+        self.speedx = 10
+        self.speedy = 0
+
+    def upadate(self):
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+        
+        if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
+            self.rect.y += 38
+            self.speedx *= -1
 game = True
 
 clock = pygame.time.Clock()
 FPS = 30
 
 all_sprites = pygame.sprite.Group()
-pos_x = 25
-pos_y = 100
+pos_x = 55
+pos_y = 50
 player = Ship(nave_img)
 all_sprites.add(player)
 
