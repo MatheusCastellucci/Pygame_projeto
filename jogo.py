@@ -21,20 +21,22 @@ PROFESSOR_WIDTH = 50
 PROFESSOR_HEIGHT = 38
 NAVE_WIDTH = 50
 NAVE_HEIGHT = 35
-TIRO_WIDTH = 0.5
-TIRO_HEIGHT = 1
+TIRO_WIDTH = 1
+TIRO_HEIGHT = 2
+
+assets = {}
 background = pygame.image.load('imagens/back.png')
-background = pygame.transform.scale(background, (width, height))
+assets ['background'] = pygame.transform.scale(background, (width, height))
 humberto_img = pygame.image.load('imagens/Ft_Humberto.png')
-humberto_img = pygame.transform.scale(humberto_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
+assets ['humberto_img'] = pygame.transform.scale(humberto_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
 hage_img = pygame.image.load('imagens/Hage.jpg')
-hage_img = pygame.transform.scale(hage_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
+assets ['hage_img'] = pygame.transform.scale(hage_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
 guzzo_img = pygame.image.load('imagens/Guzzo.jpg')
-guzzo_img = pygame.transform.scale(guzzo_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
+assets ['guzzo_img'] = pygame.transform.scale(guzzo_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
 nave_img = pygame.image.load('imagens/nave.png')
-nave_img = pygame.transform.scale(nave_img, (NAVE_WIDTH, NAVE_HEIGHT))
+assets ['nave_img'] = pygame.transform.scale(nave_img, (NAVE_WIDTH, NAVE_HEIGHT))
 tiro_img = pygame.image.load('imagens/tiro.png')
-tiro_img = pygame.transform.scale(tiro_img, (TIRO_WIDTH, TIRO_HEIGHT))
+assets ['tiro_img'] = pygame.transform.scale(tiro_img, (TIRO_WIDTH, TIRO_HEIGHT))
 
 class Ship(pygame.sprite.Sprite):
     def __init__(self, groups, img):
