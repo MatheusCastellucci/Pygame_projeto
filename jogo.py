@@ -1,13 +1,5 @@
 import pygame
 import random
-White = (255, 255, 255)
-Red = (255, 0, 0)
-Black= (0, 0, 0)
-Green = (0, 255, 0)
-Gold = (255, 215, 0)
-Blue = (0, 0, 250)
-
-
 pygame.init()
 
 WIDTH = 800
@@ -15,34 +7,37 @@ HEIGHT = 800
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Professors Invasion!!')
 
-
-PROFESSOR_WIDTH = 50
-PROFESSOR_HEIGHT = 38
-NAVE_WIDTH = 50
-NAVE_HEIGHT = 35
+PROFESSOR_WIDTH = 60
+PROFESSOR_HEIGHT = 48
+NAVE_WIDTH = 1
+NAVE_HEIGHT = 1
 TIRO_WIDTH = 1
 TIRO_HEIGHT = 2
 
 assets = {}
 background = pygame.image.load('imagens/back.png').convert()
-assets ['background'] = pygame.transform.scale(background, (WIDTH, HEIGHT))
-humberto_img = pygame.image.load('imagens/Ft_Humberto.png')
-assets ['humberto_img'] = pygame.transform.scale(humberto_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
-hage_img = pygame.image.load('imagens/Hage.jpg')
-assets ['hage_img'] = pygame.transform.scale(hage_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
-guzzo_img = pygame.image.load('imagens/Guzzo.jpg')
-assets ['guzzo_img'] = pygame.transform.scale(guzzo_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
-nave_img = pygame.image.load('imagens/nave.png')
-assets ['nave_img'] = pygame.transform.scale(nave_img, (NAVE_WIDTH, NAVE_HEIGHT))
-tiro_img = pygame.image.load('imagens/tiro.png')
-assets ['tiro_img'] = pygame.transform.scale(tiro_img, (TIRO_WIDTH, TIRO_HEIGHT))
-assets ['pos_x'] = 55
-assets ['pos_y'] = 50
+assets['background'] = pygame.transform.scale(background, (WIDTH, HEIGHT))
+
+humberto_img = pygame.image.load('imagens/Ft_Humberto.png').convert()
+assets['humberto_img'] = pygame.transform.scale(humberto_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
+
+hage_img = pygame.image.load('imagens/Hage.jpg').convert()
+assets['hage_img'] = pygame.transform.scale(hage_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
+
+guzzo_img = pygame.image.load('imagens/Guzzo.jpg').convert()
+assets['guzzo_img'] = pygame.transform.scale(guzzo_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
+
+nave_img = pygame.image.load('imagens/nave.png').convert_alpha()
+assets['nave_img'] = pygame.transform.scale(nave_img, (NAVE_WIDTH, NAVE_HEIGHT))
+
+tiro_img = pygame.image.load('imagens/tiro.png').convert()
+assets['tiro_img'] = pygame.transform.scale(tiro_img, (TIRO_WIDTH, TIRO_HEIGHT))
+assets['pos_y'] = 50
 
 assets["fonte_score"] = pygame.font.Font('fontes/PressStart2P.ttf', 28)
 
 pygame.mixer.music.load('sons/musiquinea.ogg')
-pygame.mixer.music.set_volume(0.4)
+pygame.mixer.music.set_volume(0.05)
 assets['som_dano'] = pygame.mixer.Sound('sons/expl3.wav')
 assets['mata_alien_prof'] = pygame.mixer.Sound('sons/expl6.wav')
 assets['som_tirinho'] = pygame.mixer.Sound('sons/tirinho.wav')
@@ -104,7 +99,7 @@ class EnemyHUM(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.x = assets['pos_x']
-        self.rect.y = assets['pos_y'] + 50
+        self.rect.y = assets['pos_y'] + 55
         self.speedx = 10
         self.speedy = 0
 
@@ -123,7 +118,7 @@ class EnemyHAGE(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.x = assets['pos_x']
-        self.rect.y = assets['pos_y'] + 100
+        self.rect.y = assets['pos_y'] + 110
         self.speedx = 10
         self.speedy = 0
 
@@ -170,6 +165,8 @@ player = Ship(groups, assets)
 all_sprites.add(player)
 
 for x in range(1, 10):
+    assets ['pos_x'] = 75
+    assets ['pos_x'] *= x
     humberto = EnemyHUM(assets)
     all_sprites.add(humberto)
     all_humbertos.add(humberto)
