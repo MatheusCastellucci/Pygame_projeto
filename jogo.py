@@ -15,34 +15,54 @@ HEIGHT = 800
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Professors Invasion!!')
 
-HUMBERTO_WIDTH = 50
-HUMBERTO_HEIGHT = 38
+width = 600
+height = 600
+PROFESSOR_WIDTH = 50
+PROFESSOR_HEIGHT = 38
 NAVE_WIDTH = 50
 NAVE_HEIGHT = 35
-background = pygame.image.load('imagens/back.png').convert()
-background = pygame.transform.scale(background, (WIDTH, HEIGHT))
-humberto_img = pygame.image.load('imagens/Ft_Humberto.png').convert_alpha()
-humberto_img = pygame.transform.scale(humberto_img, (HUMBERTO_WIDTH, HUMBERTO_HEIGHT))
-nave_img = pygame.image.load('imagens/nave.png').convert_alpha()
+TIRO_WIDTH = 0.5
+TIRO_HEIGHT = 1
+background = pygame.image.load('imagens/back.png')
+background = pygame.transform.scale(background, (width, height))
+humberto_img = pygame.image.load('imagens/Ft_Humberto.png')
+humberto_img = pygame.transform.scale(humberto_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
+hage_img = pygame.image.load('imagens/Hage.jpg')
+hage_img = pygame.transform.scale(hage_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
+guzzo_img = pygame.image.load('imagens/Guzzo.jpg')
+guzzo_img = pygame.transform.scale(guzzo_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
+nave_img = pygame.image.load('imagens/nave.png')
 nave_img = pygame.transform.scale(nave_img, (NAVE_WIDTH, NAVE_HEIGHT))
+tiro_img = pygame.image.load('imagens/tiro.png')
+tiro_img = pygame.transform.scale(tiro_img, (TIRO_WIDTH, TIRO_HEIGHT))
 
 class Ship(pygame.sprite.Sprite):
-    def __init__(self, img):
+    def __init__(self, groups, img):
         pygame.sprite.Sprite.__init__(self)
-        self.image = img
+        self.image = nave_img
         self.rect = self.image.get_rect()
         self.rect.centerx = WIDTH / 2
         self.rect.bottom = HEIGHT - 30
         self.speedx = 0
+        self.groups = groups
+        self.last_shot = pygame.time.get_ticks()
+        self.shoot_ticks = 200
 
     def upadate(self):
         self.rect.x += self.speedx
-        self.rect.y += self.speedy
 
         if self.rect.right > WIDTH:
             self.rect.right = WIDTH
         if self.rect.left < 0:
             self.rect.left = 0
+    
+    def shoot(self):
+        momento = pygame.time.get_ticks()
+        elapsed_ticks = momento - self.last_shot
+
+        if elapsed_ticks < self.shoot_ticks:
+            self.shoot_ticks = momento
+
 
 
 class Enemy(pygame.sprite.Sprite):
