@@ -169,8 +169,6 @@ groups['all_tirinhos'] = all_tirinhos
 player = Ship(groups, assets)
 all_sprites.add(player)
 
-enemies = []
-
 for x in range(1, 10):
     humberto = EnemyHUM(assets)
     all_sprites.add(humberto)
@@ -187,30 +185,84 @@ def displayText(text):
     message = font.render(text, False, (255, 255, 255))
     window.blit(message, (200, 160))
 
-while game:
+DONE = 0
+PLAYING = 1
+
+state = PLAYING
+
+keys_down = {}
+score = 0
+vidas = 3
+
+pygame.mixer.music.play(loops=-1)
+
+while state != DONE:
     clock.tick (FPS)
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            game = False
+            state = DONE
+    
+        if state == PLAYING:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    player.speedx -= 8
+                if event.key == pygame.K_RIGHT:
+                    player.speedx += 8
 
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                player.speedx -= 8
-            if event.key == pygame.K_RIGHT:
-                player.speedx += 8
-
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_LEFT:
-                player.speedx += 8
-            if event.key == pygame.K_RIGHT:
-                player.speedx -= 8
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_LEFT:
+                    player.speedx += 8
+                if event.key == pygame.K_RIGHT:
+                    player.speedx -= 8
                 
     all_sprites.update()
-    
+
+    if state == PLAYING:
+        hits1 = pygame.sprite.groupcollide(all_hages, all_tirinhos, True, True, pygame.sprite.collide_mask)
+        hits2 = pygame.sprite.groupcollide(all_humbertos, all_tirinhos, True, True, pygame.sprite.collide_mask)
+        hits3 = pygame.sprite.groupcollide(all_guzzos, all_tirinhos, True, True, pygame.sprite.collide_mask)
+        for hage in hits1: 
+            assets['mata_alien_prof'].play()
+
+            score += 100
+            if score % 1000 == 0 and vidas <= 3:
+                vidas += 1
+
+        for humberto in hits2: 
+            assets['mata_alien_prof'].play()
+
+            score += 100
+            if score % 1000 == 0 and vidas <= 3:
+                vidas += 1
+
+        for guzzo in hits3: 
+            assets['mata_alien_prof'].play()
+
+            score += 100
+            if score % 1000 == 0 and vidas <= 3:
+                vidas += 1
+        
+        if humberto.rect.y > height-20:
+            vidas -= 1
+            if vidas == 0:
+                state = DONE
+
+
     window.fill((0, 0, 0))
-    window.blit(background, (10, 10))
+    window.blit(background, (0, 0))
+
     all_sprites.draw(window)
+
+    text_surface = assets['fonte_score'].render("{:08d}".format(score), True, (255, 255, 0))
+    text_rect = text_surface.get_rect()
+    text_rect.midtop = (WIDTH / 2,  10)
+    window.blit(text_surface, text_rect)
+
+    text_surface = assets['score_font'].render(chr(9829) * vidas, True, (255, 0, 0))
+    text_rect = text_surface.get_rect()
+    text_rect.bottomleft = (10, HEIGHT - 10)
+    window.blit(text_surface, text_rect)
     
     pygame.display.update()
 
