@@ -91,7 +91,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.y += self.speedy
         
         if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
-            self.rect.x = random.randint(0, WIDTH-HUMBERTO_WIDTH)
+            self.rect.x = random.randint(0, WIDTH-PROFESSOR_WIDTH)
             self.rect.y = 100
             self.speedx = 0
             self.speedy = 0
