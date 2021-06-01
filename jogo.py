@@ -67,7 +67,7 @@ class Ship(pygame.sprite.Sprite):
         momento = pygame.time.get_ticks()
         elapsed_ticks = momento - self.last_shot
 
-        if elapsed_ticks < self.shoot_ticks:
+        if elapsed_ticks > self.shoot_ticks:
             self.last_shot = momento
             novo_tiro = Tirinho(self.assets, self.rect.top, self.rect.centerx)
             self.groups['all_sprites'].add(novo_tiro)
