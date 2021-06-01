@@ -11,8 +11,8 @@ PROFESSOR_WIDTH = 60
 PROFESSOR_HEIGHT = 48
 NAVE_WIDTH = 60
 NAVE_HEIGHT = 48
-TIRO_WIDTH = 1
-TIRO_HEIGHT = 2
+TIRO_WIDTH = 10
+TIRO_HEIGHT = 20
 
 assets = {}
 background = pygame.image.load('imagens/back.png').convert()
@@ -28,14 +28,14 @@ guzzo_img = pygame.image.load('imagens/Guzzo.jpg').convert()
 assets['guzzo_img'] = pygame.transform.scale(guzzo_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
 
 nave_img = pygame.image.load('imagens/nave.png').convert_alpha()
-assets['nave_img'] = pygame.transform.scale(nave_img, (NAVE_WIDTH, NAVE_HEIGHT))
+assets['nave_img'] = pygame.transform.scale(nave_img, (NAVE_WIDTH, NAVE_HEIGHT)) 
 
 tiro_img = pygame.image.load('imagens/tiro.png').convert_alpha()
 assets['tiro_img'] = pygame.transform.scale(tiro_img, (TIRO_WIDTH, TIRO_HEIGHT))
 assets['pos_y'] = 50
 
 assets["fonte_score"] = pygame.font.Font('fontes/PressStart2P.ttf', 28)
-
+assets['pew_sound'] = pygame.mixer.Sound('sons/tirinho.wav')
 pygame.mixer.music.load('sons/musiquinea.ogg')
 pygame.mixer.music.set_volume(0.05)
 assets['som_dano'] = pygame.mixer.Sound('sons/expl3.wav')
@@ -69,9 +69,9 @@ class Ship(pygame.sprite.Sprite):
 
         if elapsed_ticks > self.shoot_ticks:
             self.last_shot = momento
-            novo_tiro = Tirinho(self.assets, self.rect.top, self.rect.centerx)
-            self.groups['all_sprites'].add(novo_tiro)
-            self.groups['all_tirinhos'].add(novo_tiro)
+            novotiro = Tirinho(self.assets, self.rect.top, self.rect.centerx)
+            self.groups['all_tirinhos'].add(novotiro)
+            self.groups['all_sprites'].add(novotiro)
             self.assets['pew_sound'].play()
 
 class EnemyGUZZO(pygame.sprite.Sprite):
@@ -157,6 +157,7 @@ all_humbertos = pygame.sprite.Group()
 all_hages = pygame.sprite.Group()
 all_tirinhos = pygame.sprite.Group()
 groups = {}
+groups['all_sprites'] = all_sprites
 groups['all_guzzos'] = all_guzzos
 groups['all_humberto'] = all_humbertos
 groups['all_hages'] = all_hages
