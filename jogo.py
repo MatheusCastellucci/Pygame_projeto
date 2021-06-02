@@ -27,6 +27,9 @@ assets['hage_img'] = pygame.transform.scale(hage_img, (PROFESSOR_WIDTH, PROFESSO
 guzzo_img = pygame.image.load('imagens/Guzzo.jpg').convert()
 assets['guzzo_img'] = pygame.transform.scale(guzzo_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
 
+insper_img = pygame.image.load('imagens/Ft_Insper.png').convert_alpha()
+assets['insper_img'] = pygame.transform.scale(insper_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
+
 nave_img = pygame.image.load('imagens/nave.png').convert_alpha()
 assets['nave_img'] = pygame.transform.scale(nave_img, (NAVE_WIDTH, NAVE_HEIGHT)) 
 
@@ -81,7 +84,7 @@ class EnemyGUZZO(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.x = assets['pos_x']
-        self.rect.y = assets['pos_y']
+        self.rect.y = assets['pos_y']+55
         self.speedx = 3
         self.speedy = 0
 
@@ -100,7 +103,7 @@ class EnemyHUM(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.x = assets['pos_x']
-        self.rect.y = assets['pos_y'] + 55
+        self.rect.y = assets['pos_y'] + 110
         self.speedx = 3
         self.speedy = 0
 
@@ -119,7 +122,7 @@ class EnemyHAGE(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.x = assets['pos_x']
-        self.rect.y = assets['pos_y'] + 110
+        self.rect.y = assets['pos_y'] + 165
         self.speedx = 3
         self.speedy = 0
 
@@ -129,6 +132,24 @@ class EnemyHAGE(pygame.sprite.Sprite):
         
         if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
             self.rect.y += 50
+            self.speedx *= -1
+
+class EnemyINSPER(pygame.sprite.Sprite):
+    def __init__(self, assets):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = assets['guzzo_img']
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
+        self.rect.x = assets['pos_x']
+        self.rect.y = assets['pos_y']
+        self.speedx = 2.75
+        self.speedy = 0
+
+    def update(self):
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+        
+        if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
             self.speedx *= -1
 
 class Tirinho(pygame.sprite.Sprite):
@@ -155,9 +176,11 @@ all_sprites = pygame.sprite.Group()
 all_guzzos = pygame.sprite.Group()
 all_humbertos = pygame.sprite.Group()
 all_hages = pygame.sprite.Group()
+all_insper = pygame.sprite.Group()
 all_tirinhos = pygame.sprite.Group()
 groups = {}
 groups['all_sprites'] = all_sprites
+groups['all_insper'] = all_insper
 groups['all_guzzos'] = all_guzzos
 groups['all_humberto'] = all_humbertos
 groups['all_hages'] = all_hages
@@ -179,6 +202,12 @@ for x in range(1, 10):
     all_sprites.add(guzzo)
     all_guzzos.add(guzzo)
 
+assets ['pos_x'] = 75
+assets ['pos_x'] *= x
+insper = EnemyINSPER(assets)
+all_sprites.add(insper)
+all_humbertos.add(insper)
+
 def displayText(text):
     font = pygame.font.SysFont('', 50)
     message = font.render(text, False, (255, 255, 255))
@@ -193,7 +222,7 @@ state = PLAYING
 keys_down = {}
 score = 0
 vidas = 3
-
+vidas_insper = 40
 pygame.mixer.music.play(loops=-1)
 
 while state != DONE:
@@ -224,6 +253,7 @@ while state != DONE:
         hits1 = pygame.sprite.groupcollide(all_hages, all_tirinhos, True, True, pygame.sprite.collide_mask)
         hits2 = pygame.sprite.groupcollide(all_humbertos, all_tirinhos, True, True, pygame.sprite.collide_mask)
         hits3 = pygame.sprite.groupcollide(all_guzzos, all_tirinhos, True, True, pygame.sprite.collide_mask)
+        hits4 = pygame.sprite.groupcollide(all_insper, all_tirinhos, True, True, pygame.sprite.collide_mask)
         for hage in hits1: 
             assets['mata_alien_prof'].play()
 
@@ -244,7 +274,16 @@ while state != DONE:
             score += 100
             if score % 1000 == 0 and vidas < 3:
                 vidas += 1
-        
+
+        for insper in hits4:
+            assets['mata_alien_prof'].play()
+            score += 100
+            vidas_insper -= 1
+            if vidas_insper == 0:
+                insper.kill()
+            if score % 1000 == 0 and vidas <= 3:
+                vidas += 1
+
         if humberto.rect.y > HEIGHT-20:
             vidas -= 1
             humberto.kill()
