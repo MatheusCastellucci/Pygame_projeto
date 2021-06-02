@@ -186,6 +186,7 @@ def displayText(text):
 
 DONE = 0
 PLAYING = 1
+INIT = 2
 
 state = PLAYING
 
@@ -276,6 +277,5 @@ while state != DONE:
     window.blit(text_surface, text_rect)
     
     pygame.display.update()
-
 
 pygame.quit()
