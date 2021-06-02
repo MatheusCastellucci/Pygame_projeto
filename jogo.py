@@ -308,6 +308,8 @@ while state != DONE:
         hits7 = pygame.sprite.spritecollide(player, all_guzzos, True)
         if len(hits5) > 0 or len(hits6) > 0 or len(hits7) > 0:
             vidas -= 1
+        if vidas == 0:
+            state = DONE
 
 
 
