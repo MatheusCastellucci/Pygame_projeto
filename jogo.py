@@ -9,6 +9,8 @@ pygame.display.set_caption('Professors Invasion!!')
 
 PROFESSOR_WIDTH = 60
 PROFESSOR_HEIGHT = 48
+INSPER_WIDTH = 80
+INSPER_HEIGHT = 68
 NAVE_WIDTH = 60
 NAVE_HEIGHT = 48
 TIRO_WIDTH = 10
@@ -27,8 +29,8 @@ assets['hage_img'] = pygame.transform.scale(hage_img, (PROFESSOR_WIDTH, PROFESSO
 guzzo_img = pygame.image.load('imagens/Guzzo.jpg').convert()
 assets['guzzo_img'] = pygame.transform.scale(guzzo_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
 
-insper_img = pygame.image.load('imagens/Ft_Insper.png').convert_alpha()
-assets['insper_img'] = pygame.transform.scale(insper_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
+insper_img = pygame.image.load('imagens/Inspu.png').convert_alpha()
+assets['insper_img'] = pygame.transform.scale(insper_img, (INSPER_WIDTH, INSPER_HEIGHT))
 
 nave_img = pygame.image.load('imagens/nave.png').convert_alpha()
 assets['nave_img'] = pygame.transform.scale(nave_img, (NAVE_WIDTH, NAVE_HEIGHT)) 
@@ -133,11 +135,13 @@ class EnemyHAGE(pygame.sprite.Sprite):
         if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
             self.rect.y += 50
             self.speedx *= -1
+        if self.rect.y >= HEIGHT-20:
+            self.kill()
 
 class EnemyINSPER(pygame.sprite.Sprite):
     def __init__(self, assets):
         pygame.sprite.Sprite.__init__(self)
-        self.image = assets['guzzo_img']
+        self.image = assets['insper_img']
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.x = assets['pos_x']
