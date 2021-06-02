@@ -303,9 +303,9 @@ while state != DONE:
             guzzo.kill()
             if vidas == 0:
                 state = DONE
-        hits5 = pygame.sprite.spritecollide(player, all_hages, True)
-        hits6 = pygame.sprite.spritecollide(player, all_humbertos, True)
-        hits7 = pygame.sprite.spritecollide(player, all_guzzos, True)
+        hits5 = pygame.sprite.spritecollide(player, all_hages, True, pygame.sprite.collide_mask)
+        hits6 = pygame.sprite.spritecollide(player, all_humbertos, True, pygame.sprite.collide_mask)
+        hits7 = pygame.sprite.spritecollide(player, all_guzzos, True, pygame.sprite.collide_mask)
         if len(hits5) > 0 or len(hits6) > 0 or len(hits7) > 0:
             vidas -= 1
         if vidas == 0:
