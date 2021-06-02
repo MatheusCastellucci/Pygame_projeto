@@ -303,6 +303,13 @@ while state != DONE:
             guzzo.kill()
             if vidas == 0:
                 state = DONE
+        hits5 = pygame.sprite.spritecollide(player, all_hages, True)
+        hits6 = pygame.sprite.spritecollide(player, all_humbertos, True)
+        hits7 = pygame.sprite.spritecollide(player, all_guzzos, True)
+        if len(hits5) > 0 or len(hits6) > 0 or len(hits7) > 0:
+            vidas -= 1
+
+
 
     window.fill((0, 0, 0))
     window.blit(assets['background'], (0, 0))
