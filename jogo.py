@@ -82,7 +82,7 @@ class EnemyGUZZO(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = assets['pos_x']
         self.rect.y = assets['pos_y']
-        self.speedx = 2.75
+        self.speedx = 3
         self.speedy = 0
 
     def update(self):
@@ -90,7 +90,7 @@ class EnemyGUZZO(pygame.sprite.Sprite):
         self.rect.y += self.speedy
         
         if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
-            self.rect.y += 38
+            self.rect.y += 50
             self.speedx *= -1
 
 class EnemyHUM(pygame.sprite.Sprite):
@@ -109,7 +109,7 @@ class EnemyHUM(pygame.sprite.Sprite):
         self.rect.y += self.speedy
         
         if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
-            self.rect.y += 38
+            self.rect.y += 50
             self.speedx *= -1
 
 class EnemyHAGE(pygame.sprite.Sprite):
@@ -120,7 +120,7 @@ class EnemyHAGE(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = assets['pos_x']
         self.rect.y = assets['pos_y'] + 110
-        self.speedx = 3.3
+        self.speedx = 3
         self.speedy = 0
 
     def update(self):
@@ -128,7 +128,7 @@ class EnemyHAGE(pygame.sprite.Sprite):
         self.rect.y += self.speedy
         
         if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
-            self.rect.y += 38
+            self.rect.y += 50
             self.speedx *= -1
 
 class Tirinho(pygame.sprite.Sprite):
@@ -227,21 +227,21 @@ while state != DONE:
             assets['mata_alien_prof'].play()
 
             score += 100
-            if score % 1000 == 0 and vidas <= 3:
+            if score % 1000 == 0 and vidas < 3:
                 vidas += 1
 
         for humberto in hits2: 
             assets['mata_alien_prof'].play()
 
             score += 100
-            if score % 1000 == 0 and vidas <= 3:
+            if score % 1000 == 0 and vidas < 3:
                 vidas += 1
 
         for guzzo in hits3: 
             assets['mata_alien_prof'].play()
 
             score += 100
-            if score % 1000 == 0 and vidas <= 3:
+            if score % 1000 == 0 and vidas < 3:
                 vidas += 1
         
         if humberto.rect.y > HEIGHT-20:
