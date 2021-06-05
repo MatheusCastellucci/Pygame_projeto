@@ -39,6 +39,10 @@ tiro_img = pygame.image.load('imagens/tiro.png').convert_alpha()
 assets['tiro_img'] = pygame.transform.scale(tiro_img, (TIRO_WIDTH, TIRO_HEIGHT))
 assets['pos_y'] = 50
 
+assets['Verif_guzzo'] = 0
+assets['Verif_hage'] = 0
+assets['Verif_hum'] = 0
+
 assets["fonte_score"] = pygame.font.Font('fontes/PressStart2P.ttf', 28)
 assets['pew_sound'] = pygame.mixer.Sound('sons/tirinho.wav')
 pygame.mixer.music.load('sons/musiquinea.ogg')
@@ -86,11 +90,15 @@ class EnemyGUZZO(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.x = assets['pos_x']
-        self.rect.y = assets['pos_y']+55
-        self.speedx = 3
-        self.speedy = 0
+        self.rect.y = assets['pos_y'] - 165
+        self.speedx = 0
+        self.speedy = 3
 
     def update(self):
+        if self.rect.y >= 55 and assets['Verif_guzzo'] <= 9:
+            self.speedx = 3
+            self.speedy = 0
+            assets['Verif_guzzo'] += 1
         self.rect.x += self.speedx
         self.rect.y += self.speedy
         
@@ -105,11 +113,17 @@ class EnemyHUM(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.x = assets['pos_x']
-        self.rect.y = assets['pos_y'] + 110
-        self.speedx = 3
-        self.speedy = 0
+        self.rect.y = assets['pos_y'] - 110
+        self.speedx = 0
+        self.speedy = 3
 
     def update(self):
+
+        if self.rect.y >= 110 and assets['Verif_hum'] <= 9:
+            self.speedx = 3
+            self.speedy = 0
+            assets['Verif_hum'] += 1
+
         self.rect.x += self.speedx
         self.rect.y += self.speedy
         
@@ -124,11 +138,17 @@ class EnemyHAGE(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.x = assets['pos_x']
-        self.rect.y = assets['pos_y'] + 165
-        self.speedx = 3
-        self.speedy = 0
+        self.rect.y = assets['pos_y'] -55
+        self.speedx = 0
+        self.speedy = 3
+        
 
     def update(self):
+        if self.rect.y >= 165 and assets['Verif_hage'] <= 9:
+            self.speedx = 3
+            self.speedy = 0
+            assets['Verif_hage'] += 1
+
         self.rect.x += self.speedx
         self.rect.y += self.speedy
         
@@ -192,7 +212,6 @@ groups['all_tirinhos'] = all_tirinhos
 
 player = Ship(groups, assets)
 all_sprites.add(player)
-
 for x in range(1, 10):
     assets ['pos_x'] = 75
     assets ['pos_x'] *= x
@@ -310,8 +329,10 @@ while state != DONE:
             vidas -= 1
         if vidas == 0:
             state = DONE
-        print(all_guzzos)
         if len(all_humbertos) == 0 and len(all_guzzos) == 0 and len(all_hages) == 0:
+            assets['Verif_guzzo'] = 0
+            assets['Verif_hage'] = 0
+            assets['Verif_hum'] = 0
             #pygame.time.delay(2000)
             for x in range(1, 10):
                 assets ['pos_x'] = 75
