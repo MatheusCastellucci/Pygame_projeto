@@ -210,7 +210,7 @@ assets ['pos_x'] = 75
 assets ['pos_x'] *= x
 insper = EnemyINSPER(assets)
 all_sprites.add(insper)
-all_humbertos.add(insper)
+all_insper.add(insper)
 
 def displayText(text):
     font = pygame.font.SysFont('', 50)
@@ -310,7 +310,21 @@ while state != DONE:
             vidas -= 1
         if vidas == 0:
             state = DONE
-
+        print(all_guzzos)
+        if len(all_humbertos) == 0 and len(all_guzzos) == 0 and len(all_hages) == 0:
+            #pygame.time.delay(2000)
+            for x in range(1, 10):
+                assets ['pos_x'] = 75
+                assets ['pos_x'] *= x
+                humberto = EnemyHUM(assets)
+                all_sprites.add(humberto)
+                all_humbertos.add(humberto)
+                hage = EnemyHAGE(assets)
+                all_sprites.add(hage)
+                all_hages.add(hage)
+                guzzo = EnemyGUZZO(assets)
+                all_sprites.add(guzzo)
+                all_guzzos.add(guzzo)
 
 
     window.fill((0, 0, 0))
