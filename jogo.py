@@ -279,7 +279,7 @@ state = init_screen(window)
 keys_down = {}
 score = 0
 vidas = 3
-vidas_insper = 40
+vidas_insper = 15
 pygame.mixer.music.play(loops=-1)
 
 while state != DONE:
@@ -310,7 +310,7 @@ while state != DONE:
         hits1 = pygame.sprite.groupcollide(all_hages, all_tirinhos, True, True, pygame.sprite.collide_mask)
         hits2 = pygame.sprite.groupcollide(all_humbertos, all_tirinhos, True, True, pygame.sprite.collide_mask)
         hits3 = pygame.sprite.groupcollide(all_guzzos, all_tirinhos, True, True, pygame.sprite.collide_mask)
-        hits4 = pygame.sprite.groupcollide(all_insper, all_tirinhos, True, True, pygame.sprite.collide_mask)
+        hits4 = pygame.sprite.groupcollide(all_insper, all_tirinhos, False, True, pygame.sprite.collide_mask)
         for hage in hits1: 
             assets['mata_alien_prof'].play()
 
