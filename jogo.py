@@ -2,6 +2,41 @@ import pygame
 import random
 pygame.init()
 
+def init_screen(screen):
+    # Variável para o ajuste de velocidade
+    clock = pygame.time.Clock()
+
+    # Carrega o fundo da tela inicial
+    init_screen = pygame.image.load('imagens/init_screen.PNG').convert()
+    init_screen = pygame.transform.scale(init_screen, (WIDTH, HEIGHT))
+    init_screen_rect = init_screen.get_rect()
+
+    running = True
+    while running:
+
+        # Ajusta a velocidade do jogo.
+        clock.tick(FPS)
+
+        # Processa os eventos (mouse, teclado, botão, etc).
+        for event in pygame.event.get():
+            # Verifica se foi fechado.
+            if event.type == pygame.QUIT:
+                state = DONE
+                running = False
+
+            if event.type == pygame.KEYUP:
+                state = PLAYING
+                running = False
+
+        # A cada loop, redesenha o fundo e os sprites
+        screen.fill((1, 1, 1))
+        screen.blit(init_screen, init_screen_rect)
+
+        # Depois de desenhar tudo, inverte o display.
+        pygame.display.flip()
+
+    return state
+
 WIDTH = 800
 HEIGHT = 800
 window = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -191,7 +226,6 @@ class Tirinho(pygame.sprite.Sprite):
         if self.rect.bottom < 0:
             self.kill()
 
-game = True
 
 clock = pygame.time.Clock()
 FPS = 60
@@ -240,7 +274,7 @@ DONE = 0
 PLAYING = 1
 INIT = 2
 
-state = PLAYING
+state = init_screen(window)
 
 keys_down = {}
 score = 0
