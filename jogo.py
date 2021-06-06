@@ -315,31 +315,24 @@ while state != DONE:
             assets['mata_alien_prof'].play()
 
             score += 100
-            if score % 1000 == 0 and vidas < 3:
-                vidas += 1
 
         for humberto in hits2: 
             assets['mata_alien_prof'].play()
 
             score += 100
-            if score % 1000 == 0 and vidas < 3:
-                vidas += 1
 
         for guzzo in hits3: 
             assets['mata_alien_prof'].play()
 
             score += 100
-            if score % 1000 == 0 and vidas < 3:
+            
+        if score % 1000 == 0 and vidas < 3:
                 vidas += 1
-
         for insper in hits4:
             assets['mata_alien_prof'].play()
-            score += 100
             vidas_insper -= 1
             if vidas_insper == 0:
                 insper.kill()
-            if score % 1000 == 0 and vidas <= 3:
-                vidas += 1
 
         if humberto.rect.y > HEIGHT-20:
             vidas -= 1
