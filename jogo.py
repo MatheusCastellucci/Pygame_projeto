@@ -313,21 +313,22 @@ while state != DONE:
         hits4 = pygame.sprite.groupcollide(all_insper, all_tirinhos, False, True, pygame.sprite.collide_mask)
         for hage in hits1: 
             assets['mata_alien_prof'].play()
-
             score += 100
+            if score % 1000 == 0 and vidas < 3:
+                vidas += 1
 
         for humberto in hits2: 
             assets['mata_alien_prof'].play()
-
             score += 100
-
+            if score % 1000 == 0 and vidas < 3:
+                vidas += 1
+                
         for guzzo in hits3: 
             assets['mata_alien_prof'].play()
-
             score += 100
-            
-        if score % 1000 == 0 and vidas < 3:
+            if score % 1000 == 0 and vidas < 3:
                 vidas += 1
+        
         for insper in hits4:
             assets['mata_alien_prof'].play()
             vidas_insper -= 1
