@@ -37,17 +37,23 @@ def init_screen(screen):
 
     return state
 
+def victory_screen(screen):
+    return state
+
+def defeat_screen(screen):
+    return state
+
 WIDTH = 800
 HEIGHT = 800
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Professors Invasion!!')
 
 PROFESSOR_WIDTH = 60
-PROFESSOR_HEIGHT = 48
+PROFESSOR_HEIGHT = 50
 INSPER_WIDTH = 80
 INSPER_HEIGHT = 68
 NAVE_WIDTH = 60
-NAVE_HEIGHT = 48
+NAVE_HEIGHT = 50
 TIRO_WIDTH = 10
 TIRO_HEIGHT = 20
 
@@ -322,7 +328,7 @@ while state != DONE:
             score += 100
             if score % 1000 == 0 and vidas < 3:
                 vidas += 1
-                
+
         for guzzo in hits3: 
             assets['mata_alien_prof'].play()
             score += 100
