@@ -43,8 +43,8 @@ def victory_screen(screen):
 def defeat_screen(screen):
     return state
 
-WIDTH = 800
-HEIGHT = 800
+WIDTH = 700
+HEIGHT = 700
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Professors Invasion!!')
 
@@ -103,7 +103,7 @@ class Ship(pygame.sprite.Sprite):
         self.groups = groups
         self.assets = assets
         self.last_shot = pygame.time.get_ticks()
-        self.shoot_ticks = 200
+        self.shoot_ticks = 350
 
     def update(self):
         self.rect.x += self.speedx
@@ -137,7 +137,7 @@ class EnemyGUZZO(pygame.sprite.Sprite):
 
     def update(self):
         if self.rect.y >= 55 and assets['Verif_guzzo'] <= 9:
-            self.speedx = 3
+            self.speedx = 5
             self.speedy = 0
             assets['Verif_guzzo'] += 1
         self.rect.x += self.speedx
@@ -161,7 +161,7 @@ class EnemyHUM(pygame.sprite.Sprite):
     def update(self):
 
         if self.rect.y >= 110 and assets['Verif_hum'] <= 9:
-            self.speedx = 3
+            self.speedx = 5
             self.speedy = 0
             assets['Verif_hum'] += 1
 
@@ -186,7 +186,7 @@ class EnemyHAGE(pygame.sprite.Sprite):
 
     def update(self):
         if self.rect.y >= 165 and assets['Verif_hage'] <= 9:
-            self.speedx = 3
+            self.speedx = 5
             self.speedy = 0
             assets['Verif_hage'] += 1
 
