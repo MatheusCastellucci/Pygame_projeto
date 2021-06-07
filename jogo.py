@@ -43,8 +43,8 @@ def victory_screen(screen):
 def defeat_screen(screen):
     return state
 
-WIDTH = 800
-HEIGHT = 800
+WIDTH = 700
+HEIGHT = 700
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Professors Invasion!!')
 
@@ -70,6 +70,15 @@ assets['hage_img'] = pygame.transform.scale(hage_img, (PROFESSOR_WIDTH, PROFESSO
 guzzo_img = pygame.image.load('imagens/Guzzo.jpg').convert()
 assets['guzzo_img'] = pygame.transform.scale(guzzo_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
 
+Sergio_img = pygame.image.load('imagens/Sergio.jpg').convert_alpha()
+assets['sergio_img'] = pygame.transform.scale(Sergio_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
+
+Carlos_img = pygame.image.load('imagens/Carlos.jpg').convert()
+assets['carlos_img'] = pygame.transform.scale(Carlos_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
+
+Leo_img = pygame.image.load('imagens/Leonidas.jpg').convert()
+assets['leo_img'] = pygame.transform.scale(Leo_img, (PROFESSOR_WIDTH, PROFESSOR_HEIGHT))
+
 insper_img = pygame.image.load('imagens/Inspu.png').convert_alpha()
 assets['insper_img'] = pygame.transform.scale(insper_img, (INSPER_WIDTH, INSPER_HEIGHT))
 
@@ -83,6 +92,9 @@ assets['pos_y'] = 50
 assets['Verif_guzzo'] = 0
 assets['Verif_hage'] = 0
 assets['Verif_hum'] = 0
+assets['Verif_sergio'] = 0
+assets['Verif_leo'] = 0
+assets['Verif_carlos'] = 0
 
 assets["fonte_score"] = pygame.font.Font('fontes/PressStart2P.ttf', 28)
 assets['pew_sound'] = pygame.mixer.Sound('sons/tirinho.wav')
@@ -137,7 +149,7 @@ class EnemyGUZZO(pygame.sprite.Sprite):
 
     def update(self):
         if self.rect.y >= 55 and assets['Verif_guzzo'] <= 9:
-            self.speedx = 3
+            self.speedx = 5
             self.speedy = 0
             assets['Verif_guzzo'] += 1
         self.rect.x += self.speedx
@@ -161,7 +173,7 @@ class EnemyHUM(pygame.sprite.Sprite):
     def update(self):
 
         if self.rect.y >= 110 and assets['Verif_hum'] <= 9:
-            self.speedx = 3
+            self.speedx = 5
             self.speedy = 0
             assets['Verif_hum'] += 1
 
@@ -186,9 +198,84 @@ class EnemyHAGE(pygame.sprite.Sprite):
 
     def update(self):
         if self.rect.y >= 165 and assets['Verif_hage'] <= 9:
-            self.speedx = 3
+            self.speedx = 5
             self.speedy = 0
             assets['Verif_hage'] += 1
+
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+        
+        if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
+            self.rect.y += 50
+            self.speedx *= -1
+        if self.rect.y >= HEIGHT-20:
+            self.kill()
+
+class EnemySergio(pygame.sprite.Sprite):
+    def __init__(self, assets):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = assets['sergio_img']
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
+        self.rect.x = assets['pos_x']
+        self.rect.y = assets['pos_y'] - 220
+        self.speedx = 0
+        self.speedy = 3
+
+    def update(self):
+        if self.rect.y >= 0 and assets['Verif_sergio'] <= 9:
+            self.speedx = -5
+            self.speedy = 0
+            assets['Verif_sergio'] += 1
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+        
+        if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
+            self.rect.y += 50
+            self.speedx *= -1
+
+class EnemyCarlos(pygame.sprite.Sprite):
+    def __init__(self, assets):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = assets['carlos_img']
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
+        self.rect.x = assets['pos_x']
+        self.rect.y = assets['pos_y'] - 275
+        self.speedx = 0
+        self.speedy = 3
+
+    def update(self):
+
+        if self.rect.y >= -55 and assets['Verif_carlos'] <= 9:
+            self.speedx = -5
+            self.speedy = 0
+            assets['Verif_carlos'] += 1
+
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+        
+        if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
+            self.rect.y += 50
+            self.speedx *= -1
+
+class EnemyLeo(pygame.sprite.Sprite):
+    def __init__(self, assets):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = assets['leo_img']
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
+        self.rect.x = assets['pos_x']
+        self.rect.y = assets['pos_y'] - 330
+        self.speedx = 0
+        self.speedy = 3
+        
+
+    def update(self):
+        if self.rect.y >= -110 and assets['Verif_leo'] <= 9:
+            self.speedx = -5
+            self.speedy = 0
+            assets['Verif_leo'] += 1
 
         self.rect.x += self.speedx
         self.rect.y += self.speedy
@@ -240,6 +327,9 @@ all_sprites = pygame.sprite.Group()
 all_guzzos = pygame.sprite.Group()
 all_humbertos = pygame.sprite.Group()
 all_hages = pygame.sprite.Group()
+all_leonidas = pygame.sprite.Group()
+all_sergio = pygame.sprite.Group()
+all_carlos = pygame.sprite.Group()
 all_insper = pygame.sprite.Group()
 all_tirinhos = pygame.sprite.Group()
 groups = {}
@@ -248,6 +338,9 @@ groups['all_insper'] = all_insper
 groups['all_guzzos'] = all_guzzos
 groups['all_humberto'] = all_humbertos
 groups['all_hages'] = all_hages
+groups['all_carlos'] = all_carlos
+groups['all_leonidas'] = all_leonidas
+groups['all_sergio'] = all_sergio
 groups['all_tirinhos'] = all_tirinhos 
 
 player = Ship(groups, assets)
@@ -264,9 +357,16 @@ for x in range(1, 10):
     guzzo = EnemyGUZZO(assets)
     all_sprites.add(guzzo)
     all_guzzos.add(guzzo)
+    carlos = EnemyCarlos(assets)
+    all_sprites.add(carlos)
+    all_carlos.add(carlos)
+    leo = EnemyLeo(assets)
+    all_sprites.add(leo)
+    all_leonidas.add(leo)
+    sergio = EnemySergio(assets)
+    all_sprites.add(sergio)
+    all_sergio.add(sergio)
 
-assets ['pos_x'] = 75
-assets ['pos_x'] *= x
 insper = EnemyINSPER(assets)
 all_sprites.add(insper)
 all_insper.add(insper)
@@ -316,26 +416,47 @@ while state != DONE:
         hits1 = pygame.sprite.groupcollide(all_hages, all_tirinhos, True, True, pygame.sprite.collide_mask)
         hits2 = pygame.sprite.groupcollide(all_humbertos, all_tirinhos, True, True, pygame.sprite.collide_mask)
         hits3 = pygame.sprite.groupcollide(all_guzzos, all_tirinhos, True, True, pygame.sprite.collide_mask)
-        hits4 = pygame.sprite.groupcollide(all_insper, all_tirinhos, False, True, pygame.sprite.collide_mask)
+        hits4 = pygame.sprite.groupcollide(all_sergio, all_tirinhos, True, True, pygame.sprite.collide_mask)
+        hits5 = pygame.sprite.groupcollide(all_carlos, all_tirinhos, True, True, pygame.sprite.collide_mask)
+        hits6 = pygame.sprite.groupcollide(all_leonidas, all_tirinhos, True, True, pygame.sprite.collide_mask)
+        hits7 = pygame.sprite.groupcollide(all_insper, all_tirinhos, False, True, pygame.sprite.collide_mask)
         for hage in hits1: 
             assets['mata_alien_prof'].play()
             score += 100
-            if score % 1000 == 0 and vidas < 3:
+            if score % 5000 == 0 and vidas < 3:
                 vidas += 1
 
         for humberto in hits2: 
             assets['mata_alien_prof'].play()
             score += 100
-            if score % 1000 == 0 and vidas < 3:
+            if score % 5000 == 0 and vidas < 3:
                 vidas += 1
 
         for guzzo in hits3: 
             assets['mata_alien_prof'].play()
             score += 100
-            if score % 1000 == 0 and vidas < 3:
+            if score % 5000 == 0 and vidas < 3:
                 vidas += 1
         
-        for insper in hits4:
+        for sergio in hits4: 
+            assets['mata_alien_prof'].play()
+            score += 100
+            if score % 5000 == 0 and vidas < 3:
+                vidas += 1
+
+        for carlos in hits5: 
+            assets['mata_alien_prof'].play()
+            score += 100
+            if score % 5000 == 0 and vidas < 3:
+                vidas += 1
+
+        for leo in hits6: 
+            assets['mata_alien_prof'].play()
+            score += 100
+            if score % 5000 == 0 and vidas < 3:
+                vidas += 1
+
+        for insper in hits7:
             assets['mata_alien_prof'].play()
             vidas_insper -= 1
             if vidas_insper == 0:
@@ -356,10 +477,28 @@ while state != DONE:
             guzzo.kill()
             if vidas == 0:
                 state = DONE
-        hits5 = pygame.sprite.spritecollide(player, all_hages, True, pygame.sprite.collide_mask)
-        hits6 = pygame.sprite.spritecollide(player, all_humbertos, True, pygame.sprite.collide_mask)
-        hits7 = pygame.sprite.spritecollide(player, all_guzzos, True, pygame.sprite.collide_mask)
-        if len(hits5) > 0 or len(hits6) > 0 or len(hits7) > 0:
+        if sergio.rect.y > HEIGHT-20:
+            vidas -= 1
+            sergio.kill()
+            if vidas == 0:
+                state = DONE
+        if carlos.rect.y > HEIGHT-20:
+            vidas -= 1
+            carlos.kill()
+            if vidas == 0:
+                state = DONE
+        if leo.rect.y > HEIGHT-20:
+            vidas -= 1
+            leo.kill()
+            if vidas == 0:
+                state = DONE
+        hits8 = pygame.sprite.spritecollide(player, all_hages, True, pygame.sprite.collide_mask)
+        hits9 = pygame.sprite.spritecollide(player, all_humbertos, True, pygame.sprite.collide_mask)
+        hits10 = pygame.sprite.spritecollide(player, all_guzzos, True, pygame.sprite.collide_mask)
+        hits11 = pygame.sprite.spritecollide(player, all_sergio, True, pygame.sprite.collide_mask)
+        hits12 = pygame.sprite.spritecollide(player, all_carlos, True, pygame.sprite.collide_mask)
+        hits13 = pygame.sprite.spritecollide(player, all_leonidas, True, pygame.sprite.collide_mask)
+        if len(hits8) > 0 or len(hits9) > 0 or len(hits10) > 0 or len(hits11) > 0 or len(hits12) > 0 or len(hits13) > 0:
             vidas -= 1
         if vidas == 0:
             state = DONE
@@ -367,7 +506,6 @@ while state != DONE:
             assets['Verif_guzzo'] = 0
             assets['Verif_hage'] = 0
             assets['Verif_hum'] = 0
-            #pygame.time.delay(2000)
             for x in range(1, 10):
                 assets ['pos_x'] = 75
                 assets ['pos_x'] *= x
@@ -380,8 +518,22 @@ while state != DONE:
                 guzzo = EnemyGUZZO(assets)
                 all_sprites.add(guzzo)
                 all_guzzos.add(guzzo)
-
-
+        if len(all_carlos) == 0 and len(all_leonidas) == 0 and len(all_sergio) == 0:
+            assets['Verif_sergio'] = 0
+            assets['Verif_leo'] = 0
+            assets['Verif_carlos'] = 0
+            for x in range(1, 10):
+                assets ['pos_x'] = 75
+                assets ['pos_x'] *= x
+                carlos = EnemyCarlos(assets)
+                all_sprites.add(carlos)
+                all_carlos.add(carlos)
+                leo = EnemyLeo(assets)
+                all_sprites.add(leo)
+                all_leonidas.add(leo)
+                sergio = EnemySergio(assets)
+                all_sprites.add(sergio)
+                all_sergio.add(sergio)
     window.fill((0, 0, 0))
     window.blit(assets['background'], (0, 0))
 
