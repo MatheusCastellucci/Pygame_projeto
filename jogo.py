@@ -115,7 +115,7 @@ class Ship(pygame.sprite.Sprite):
         self.groups = groups
         self.assets = assets
         self.last_shot = pygame.time.get_ticks()
-        self.shoot_ticks = 200
+        self.shoot_ticks = 350
 
     def update(self):
         self.rect.x += self.speedx
