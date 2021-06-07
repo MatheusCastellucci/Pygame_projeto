@@ -98,7 +98,7 @@ assets['Verif_carlos'] = 0
 
 assets["fonte_score"] = pygame.font.Font('fontes/PressStart2P.ttf', 28)
 assets['pew_sound'] = pygame.mixer.Sound('sons/tirinho.wav')
-pygame.mixer.music.load('sons/musiquinea.ogg')
+pygame.mixer.music.load('sons/musiquinea.wav')
 pygame.mixer.music.set_volume(0.05)
 assets['som_dano'] = pygame.mixer.Sound('sons/expl3.wav')
 assets['mata_alien_prof'] = pygame.mixer.Sound('sons/expl6.wav')
