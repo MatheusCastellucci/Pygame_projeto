@@ -99,7 +99,7 @@ assets['Verif_carlos'] = 0
 assets["fonte_score"] = pygame.font.Font('fontes/PressStart2P.ttf', 28)
 assets['pew_sound'] = pygame.mixer.Sound('sons/tirinho.wav')
 pygame.mixer.music.load('sons/musiquinea.wav')
-pygame.mixer.music.set_volume(0.05)
+pygame.mixer.music.set_volume(0.2)
 assets['som_dano'] = pygame.mixer.Sound('sons/expl3.wav')
 assets['mata_alien_prof'] = pygame.mixer.Sound('sons/expl6.wav')
 assets['som_tirinho'] = pygame.mixer.Sound('sons/tirinho.wav')
@@ -115,7 +115,7 @@ class Ship(pygame.sprite.Sprite):
         self.groups = groups
         self.assets = assets
         self.last_shot = pygame.time.get_ticks()
-        self.shoot_ticks = 350
+        self.shoot_ticks = 250
 
     def update(self):
         self.rect.x += self.speedx
