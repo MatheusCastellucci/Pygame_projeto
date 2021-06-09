@@ -37,9 +37,43 @@ def init_screen(screen):
     return state
 
 def victory_screen(screen):
+    clock = pygame.time.Clock()
+    vict_screen = pygame.image.load('imagens/You Win.PNG').convert()
+    vict_screen = pygame.transform.scale(vict_screen, (WIDTH, HEIGHT))
+    vict_screen_rect = vict_screen.get_rect()
+
+    running = True
+    while running:
+        clock.tick(FPS)
+        for event in pygame.event.get():
+            # Verifica se foi fechado.
+            if event.type == pygame.QUIT:
+                state = DONE
+                running = False
+        screen.fill((1, 1, 1))
+        screen.blit(vict_screen, vict_screen_rect)
+        # Depois de desenhar tudo, inverte o display.
+        pygame.display.flip()
     return state
 
 def defeat_screen(screen):
+    clock = pygame.time.Clock()
+    def_screen = pygame.image.load('imagens/Game Over.PNG').convert()
+    def_screen = pygame.transform.scale(def_screen, (WIDTH, HEIGHT))
+    def_screen_rect = def_screen.get_rect()
+
+    running = True
+    while running:
+        clock.tick(FPS)
+        for event in pygame.event.get():
+            # Verifica se foi fechado.
+            if event.type == pygame.QUIT:
+                state = DONE
+                running = False
+        screen.fill((1, 1, 1))
+        screen.blit(def_screen, def_screen_rect)
+        # Depois de desenhar tudo, inverte o display.
+        pygame.display.flip()
     return state
 
 WIDTH = 700
@@ -114,7 +148,7 @@ class Ship(pygame.sprite.Sprite):
         self.groups = groups
         self.assets = assets
         self.last_shot = pygame.time.get_ticks()
-        self.shoot_ticks = 250
+        self.shoot_ticks = 350
 
     def update(self):
         self.rect.x += self.speedx
@@ -378,6 +412,8 @@ def displayText(text):
 DONE = 0
 PLAYING = 1
 INIT = 2
+VICTORY = 3
+DEFEAT = 4
 
 state = init_screen(window)
 
@@ -460,6 +496,7 @@ while state != DONE:
             vidas_insper -= 1
             if vidas_insper == 0:
                 insper.kill()
+                state = victory_screen(window)
 
         if humberto.rect.y > HEIGHT-20:
             vidas -= 1
@@ -500,7 +537,8 @@ while state != DONE:
         if len(hits8) > 0 or len(hits9) > 0 or len(hits10) > 0 or len(hits11) > 0 or len(hits12) > 0 or len(hits13) > 0:
             vidas -= 1
         if vidas == 0:
-            state = DONE
+            state = defeat_screen(window)
+
         if len(all_humbertos) == 0 and len(all_guzzos) == 0 and len(all_hages) == 0:
             assets['Verif_guzzo'] = 0
             assets['Verif_hage'] = 0
@@ -547,7 +585,6 @@ while state != DONE:
     text_rect = text_surface.get_rect()
     text_rect.bottomleft = (10, HEIGHT - 10)
     window.blit(text_surface, text_rect)
-    
     pygame.display.update()
 
 pygame.quit()
