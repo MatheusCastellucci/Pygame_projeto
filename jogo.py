@@ -271,7 +271,7 @@ while state != DONE:
         if len(all_humbertos) == 0 and len(all_guzzos) == 0 and len(all_hages) == 0:
             assets['Verif_guzzo'] = 0
             assets['Verif_hage'] = 0
-            assets['Verif_hum'] = 0
+            assets['Verif_humberto'] = 0
             for x in range(1, 10):
                 assets ['pos_x'] = 75
                 assets ['pos_x'] *= x
@@ -286,7 +286,7 @@ while state != DONE:
                 all_guzzos.add(guzzo)
         if len(all_carlos) == 0 and len(all_leonidas) == 0 and len(all_sergio) == 0:
             assets['Verif_sergio'] = 0
-            assets['Verif_leo'] = 0
+            assets['Verif_leonidas'] = 0
             assets['Verif_carlos'] = 0
             for x in range(1, 10):
                 assets ['pos_x'] = 75
@@ -301,7 +301,7 @@ while state != DONE:
                 all_sprites.add(sergio)
                 all_sergio.add(sergio)
     window.fill((0, 0, 0))
-    window.blit(assets['background'], (0, 0))
+    window.blit(assets['background_img'], (0, 0))
 
     all_sprites.draw(window)
 
